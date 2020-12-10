@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace StringEnum
 {
@@ -12,7 +13,7 @@ namespace StringEnum
 
 		public override string ToString() => this.Value;
 
-		public static T New(string value)
+		public static T New([CallerMemberName] string value = null)
 		{
 			var objValue = Activator.CreateInstance<T>();
 			objValue.Value = value;

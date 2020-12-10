@@ -10,8 +10,8 @@ namespace StringEnum
 	[JsonConverter(typeof(JsonStringEnumConverter<MyPet>))]
 	public class MyPet : StringEnumBase<MyPet>
 	{
-		public static MyPet Cat => New("Cat");
-		public static MyPet Dog => New("Dog");
+		public static MyPet Cat => New(); // the value will be "Cat"
+		public static MyPet Dog => New("Dog"); // custom value
 		public static MyPet Mouse => New("Mouse");
 	}
 
