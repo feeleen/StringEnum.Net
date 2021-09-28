@@ -57,5 +57,23 @@ namespace StringEnum
 		public static bool operator ==(StringEnumBase<T> a, StringEnumBase<T> b) => a?.Equals(b) ?? false;
 
 		public static bool operator !=(StringEnumBase<T> a, StringEnumBase<T> b) => !(a?.Equals(b) ?? false);
-	}
+
+		/// <summary>
+		/// For: string cat = MyPet.Cat;
+		/// </summary>
+		/// <param name="input"></param>
+		public static implicit operator string(StringEnumBase<T> input)
+		{
+			return input.Value;
+		}
+
+		/// <summary>
+		/// For: MyPet cat = (MyPet)"Cat";
+		/// </summary>
+		/// <param name="input"></param>
+		public static implicit operator StringEnumBase<T>(string input)
+        {
+            return New(input);
+        }
+    }
 }

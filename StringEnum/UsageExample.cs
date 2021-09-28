@@ -10,8 +10,8 @@ namespace StringEnum
 	[JsonConverter(typeof(JsonStringEnumConverter<MyPet>))]
 	public class MyPet : StringEnumBase<MyPet>
 	{
-		public static MyPet Cat => New(); // the value will be "Cat"
-		public static MyPet Dog => New("Dog"); // custom value
+		public static MyPet Cat => New(); // = "Cat"
+
 		public static MyPet Mouse => New("Mouse");
 	}
 
@@ -23,10 +23,16 @@ namespace StringEnum
 
 		public bool Bar()
 		{
-			if (this.pet == MyPet.Dog || this.pet == MyPet.Mouse)
+			var mouse = MyPet.Mouse;
+			if (mouse == "Mouse")
 				return true;
 			else
-				return false;
+			{
+				if (this.pet == MyPet.Dog || this.pet == MyPet.Mouse)
+					return true;
+				else
+					return false;
+			}
 		}
 	}
 }
