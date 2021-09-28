@@ -11,7 +11,7 @@ namespace StringEnum
 	public class MyPet : StringEnumBase<MyPet>
 	{
 		public static MyPet Cat => New(); // = "Cat"
-
+		public static MyPet Dog => New("Dog");
 		public static MyPet Mouse => New("Mouse");
 	}
 
