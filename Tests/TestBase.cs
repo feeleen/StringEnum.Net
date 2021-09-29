@@ -42,6 +42,20 @@ namespace Tests
             string cat = MyPet.Cat;
             Assert.IsTrue(cat == "Cat");
         }
+
+        [TestMethod]
+        public void TestMethodIgnoreCase()
+        {
+            string cat = (MyPet)"cat";
+            Assert.IsTrue(cat == "Cat");
+        }
+
+        [TestMethod]
+        public void TestMethodEnumUpperCase()
+        {
+            string cat = (MyFlower)"rose";
+            Assert.IsTrue(cat == "ROSE");
+        }
     }
 
     [JsonConverter(typeof(JsonStringEnumConverter<MyPet>))]
@@ -50,5 +64,13 @@ namespace Tests
         public static MyPet Cat => New(); // = "Cat"
         public static MyPet Dog => New("Dog");
         public static MyPet Mouse => New("Mouse");
+    }
+
+
+    [JsonConverter(typeof(JsonStringEnumConverter<MyFlower>))]
+    public class MyFlower : StringEnumBase<MyFlower>
+    {
+        public static MyFlower Rose => New(EnumCase.Upper);
+        public static MyFlower Hibiscus => New();
     }
 }

@@ -15,8 +15,26 @@ namespace StringEnum
 
 		public static T New([CallerMemberName] string value = null)
 		{
+			return New(EnumCase.AsIs, value);
+		}
+
+		public static T New(EnumCase enumCase, [CallerMemberName] string value = null)
+		{
 			var objValue = Activator.CreateInstance<T>();
-			objValue.Value = value;
+			switch (enumCase)
+			{
+				case EnumCase.AsIs:
+					objValue.Value = value;
+					break;
+
+				case EnumCase.Lower:
+					objValue.Value = value.ToLower();
+					break;
+
+				case EnumCase.Upper:
+					objValue.Value = value.ToUpper();
+					break;
+			}
 			return objValue;
 		}
 
@@ -33,16 +51,16 @@ namespace StringEnum
 		{
 			List<T> all = AsList();
 
-			if (!all.Any(a => a.Value == value))
+			if (!all.Any(a => string.Equals(a.Value, value, StringComparison.OrdinalIgnoreCase)))
 				throw new InvalidOperationException($"Value \"{value}\" is not a valid value for the type {typeof(T).Name}");
 
-			return all.Single(a => a.Value == value);
+			return all.Single(a => string.Equals(a.Value, value, StringComparison.OrdinalIgnoreCase));
 		}
 
 		public bool Equals(T other)
 		{
 			if (other == null) return false;
-			return this.Value == other?.Value;
+			return string.Equals(this.Value, other?.Value, StringComparison.OrdinalIgnoreCase);
 		}
 
 		public override bool Equals(object obj)
@@ -52,7 +70,7 @@ namespace StringEnum
 			return false;
 		}
 
-		public override int GetHashCode() => this.Value.GetHashCode();
+		public override int GetHashCode() => this.Value.ToLower().GetHashCode();
 
 		public static bool operator ==(StringEnumBase<T> a, StringEnumBase<T> b) => a?.Equals(b) ?? false;
 
@@ -73,7 +91,7 @@ namespace StringEnum
 		/// <param name="input"></param>
 		public static implicit operator StringEnumBase<T>(string input)
         {
-            return New(input);
+            return Parse(input);
         }
     }
 }
