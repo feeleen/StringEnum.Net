@@ -9,6 +9,13 @@ namespace StringEnum
 	public abstract class StringEnumBase<T> : IEquatable<T>
 		where T : StringEnumBase<T>
 	{
+		public enum EnumCase
+		{
+			Lower,
+			Upper,
+			AsIs
+		}
+
 		public string Value { get; protected set; }
 
 		public override string ToString() => this.Value;

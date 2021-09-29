@@ -49,9 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EnumCase.cs" />
     <Compile Include="JsonStringEnumConverter.cs" />
-    <Compile Include="UsageExample.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringEnumBase.cs" />
   </ItemGroup>
