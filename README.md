@@ -29,6 +29,8 @@ public class Foo
 				return false;
 		}
 		
+		
+		// implicit conversions example
 		string cat = MyPet.Cat;
             	Assert.IsTrue(cat == "Cat");
 		
