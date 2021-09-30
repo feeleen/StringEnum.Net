@@ -56,6 +56,15 @@ namespace Tests
             string cat = (MyFlower)"rose";
             Assert.IsTrue(cat == "ROSE");
         }
+
+        [TestMethod]
+        public void TestMethodJson()
+        {
+            string jsonData = "{'FlowerType' : 'Rose', 'Quantity' : 2 }";
+            var obj = JsonConvert.DeserializeObject<GardenFlower>(jsonData);
+
+            Assert.IsTrue(obj.FlowerType == "ROSE");
+        }
     }
 
     [JsonConverter(typeof(JsonStringEnumConverter<MyPet>))]
@@ -72,5 +81,13 @@ namespace Tests
     {
         public static MyFlower Rose => New(EnumCase.Upper);
         public static MyFlower Hibiscus => New();
+    }
+
+
+    public class GardenFlower
+    {
+        public MyFlower FlowerType { get; set; }
+
+        public int Quantity { get; set; }
     }
 }
