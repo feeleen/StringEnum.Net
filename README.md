@@ -2,6 +2,8 @@
 
 # StringEnum.NET - Enumeration-like string values
 
+.NET 5.0
+
 Defining your StringEnum:
 
 ```cs
