@@ -1,4 +1,8 @@
-Usage example
+[![Build status](https://ci.appveyor.com/api/projects/status/dkm6x44rnqwsrbly?svg=true)](https://ci.appveyor.com/project/feeleen/stringenum-net)
+
+# StringEnum.NET - Enumeration-like string values
+
+Defining your StringEnum:
 
 ```cs
 
@@ -10,6 +14,11 @@ public class MyPet : StringEnumBase<MyPet>
 	public static MyPet Mouse => New(EnumCase.AsIs);
 }
 
+```
+
+Usage example:
+
+```cs
 public class Foo
 {
 	public MyPet pet { get; }
