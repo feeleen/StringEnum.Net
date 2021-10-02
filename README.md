@@ -13,7 +13,8 @@ public class MyPet : StringEnumBase<MyPet>
 	public static MyPet Cat => New(); // = "Cat"
 	public static MyPet Rabbit => New("Rabbit");
 	public static MyPet Dog => New(EnumCase.Upper, "Dog"); // MyPet.Dog.ToString() -> "DOG"
-	public static MyPet Mouse => New(EnumCase.AsIs);
+	public static MyPet Ghost => New(null);  // handy when values in dataobject may have null values
+	public static MyPet Empty => New(String.Empty);
 }
 
 ```
