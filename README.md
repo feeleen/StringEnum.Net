@@ -1,6 +1,8 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/dkm6x44rnqwsrbly?svg=true)](https://ci.appveyor.com/project/feeleen/stringenum-net)
+[![Build status](https://ci.appveyor.com/api/projects/status/dkm6x44rnqwsrbly?svg=true)](https://ci.appveyor.com/project/feeleen/stringenum-net) [![NuGet Badge](https://buildstats.info/nuget/StringEnum.Net)](https://www.nuget.org/packages/StringEnum.Net/)
 
 # StringEnum.NET - Enumeration-like string values
+
+.NET 5.0
 
 Defining your StringEnum:
 
