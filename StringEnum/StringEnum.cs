@@ -211,23 +211,4 @@ namespace StringEnum
 			return (T?) Parse(input?.Value);
 		}
 	}
-
-
-	public class StringEnumConverter<T> : TypeConverter
-		where T: StringEnum<T>
-	{
-		public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
-		{
-			return sourceType == typeof(string);
-		}
-
-		public override object? ConvertFrom(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value)
-		{
-			var name = value as string;
-			if (name != null)
-				return (T?) name;
-			else
-				return StringEnum<T>.Parse((string?)value);
-		}
-	}
 }
