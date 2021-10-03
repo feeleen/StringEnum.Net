@@ -62,8 +62,14 @@ public class MyFlower : StringEnumBase<MyFlower>
     public static MyFlower Hibiscus => New();
 }
 
+public class GardenFlower
+{
+    public MyFlower FlowerType { get; set; }
+    public int Quantity { get; set; }
+}
+
 string jsonData = "{'FlowerType' : 'Rose', 'Quantity' : 2 }";
-var obj = JsonConvert.DeserializeObject<MyFlower>(jsonData);
+var obj = JsonConvert.DeserializeObject<GardenFlower>(jsonData);
 
 Assert.IsTrue(obj.FlowerType == "Rose");
 
