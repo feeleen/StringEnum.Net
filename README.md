@@ -72,5 +72,6 @@ string jsonData = "{'FlowerType' : 'Rose', 'Quantity' : 2 }";
 var obj = JsonConvert.DeserializeObject<GardenFlower>(jsonData);
 
 Assert.IsTrue(obj.FlowerType == "Rose");
+Assert.IsTrue(obj.FlowerType == MyFlower.Rose);
 
 ```
