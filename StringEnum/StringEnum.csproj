@@ -2,8 +2,10 @@
 
   <PropertyGroup>
     <TargetFrameworks>net5.0</TargetFrameworks>
+    <Version>1.0.1</Version>
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Title>StringEnum.Net</Title>
     <Authors>Feeleen</Authors>
     <Company>Feeleen</Company>
     <PackageId>StringEnum.Net</PackageId>
