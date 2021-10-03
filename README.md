@@ -63,7 +63,7 @@ public class MyFlower : StringEnumBase<MyFlower>
 }
 
 string jsonData = "{'FlowerType' : 'Rose', 'Quantity' : 2 }";
-var obj = JsonConvert.DeserializeObject<GardenFlower>(jsonData);
+var obj = JsonConvert.DeserializeObject<MyFlower>(jsonData);
 
 Assert.IsTrue(obj.FlowerType == "Rose");
 
