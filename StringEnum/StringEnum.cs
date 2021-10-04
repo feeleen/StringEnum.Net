@@ -10,7 +10,7 @@ using System.Runtime.CompilerServices;
 
 namespace StringEnum
 {
-	public abstract class StringEnum<T> : IEquatable<T>//, IConvertible
+	public abstract class StringEnum<T> : IEquatable<T>, IConvertible
 		where T : StringEnum<T>
 	{
 		public enum EnumCase
@@ -102,87 +102,99 @@ namespace StringEnum
 		}
 		#endregion
 
-		//#region IConvertible
-		//public bool ToBoolean(IFormatProvider provider)
-		//{
-		//	return ((IConvertible)Value).ToBoolean(provider);
-		//}
+		#region IConvertible
+		public bool ToBoolean(IFormatProvider? provider)
+		{
+			return Convert.ToBoolean(Value, provider);
+		}
 
-		//public byte ToByte(IFormatProvider provider)
-		//{
-		//	return ((IConvertible)Value).ToByte(provider);
-		//}
+		public byte ToByte(IFormatProvider? provider)
+		{
+			return Convert.ToByte(Value, provider);
+		}
 
-		//public char ToChar(IFormatProvider provider)
-		//{
-		//	return ((IConvertible)Value).ToChar(provider);
-		//}
+		public char ToChar(IFormatProvider? provider)
+		{
+			if (Value == null)
+				throw new ArgumentNullException(nameof(Value));
 
-		//public DateTime ToDateTime(IFormatProvider provider)
-		//{
-		//	return ((IConvertible)Value).ToDateTime(provider);
-		//}
+			return Convert.ToChar(Value, provider);
+		}
 
-		//public decimal ToDecimal(IFormatProvider provider)
-		//{
-		//	return ((IConvertible)Value).ToDecimal(provider);
-		//}
+		public DateTime ToDateTime(IFormatProvider? provider)
+		{
+			return Convert.ToDateTime(Value, provider);
+		}
 
-		//public double ToDouble(IFormatProvider provider)
-		//{
-		//	return ((IConvertible)Value).ToDouble(provider);
-		//}
+		public decimal ToDecimal(IFormatProvider? provider)
+		{
+			return Convert.ToDecimal(Value, provider);
+		}
 
-		//public short ToInt16(IFormatProvider provider)
-		//{
-		//	return ((IConvertible)Value).ToInt16(provider);
-		//}
+		public double ToDouble(IFormatProvider? provider)
+		{
+			return Convert.ToDouble(Value, provider);
+		}
 
-		//public int ToInt32(IFormatProvider provider)
-		//{
-		//	return ((IConvertible)Value).ToInt32(provider);
-		//}
+		public short ToInt16(IFormatProvider? provider)
+		{
+			return Convert.ToInt16(Value, provider);
+		}
 
-		//public long ToInt64(IFormatProvider provider)
-		//{
-		//	return ((IConvertible)Value).ToInt64(provider);
-		//}
+		public int ToInt32(IFormatProvider? provider)
+		{
+			return Convert.ToInt32(Value, provider);
+		}
 
-		//public sbyte ToSByte(IFormatProvider provider)
-		//{
-		//	return ((IConvertible)Value).ToSByte(provider);
-		//}
+		public long ToInt64(IFormatProvider? provider)
+		{
+			return Convert.ToInt64(Value, provider);
+		}
 
-		//public float ToSingle(IFormatProvider provider)
-		//{
-		//	return ((IConvertible)Value).ToSingle(provider);
-		//}
+		public sbyte ToSByte(IFormatProvider? provider)
+		{
+			if (Value == null)
+				throw new ArgumentNullException(nameof(Value));
 
-		//public string ToString(IFormatProvider provider)
-		//{
-		//	return Value?.ToString(provider);
-		//}
+			return Convert.ToSByte(Value, provider);
+		}
 
-		//public object ToType(Type conversionType, IFormatProvider provider)
-		//{
-		//	return ((IConvertible)Value).ToType(conversionType, provider);
-		//}
+		public float ToSingle(IFormatProvider? provider)
+		{
+			return Convert.ToSingle(Value, provider);
+		}
 
-		//public ushort ToUInt16(IFormatProvider provider)
-		//{
-		//	return ((IConvertible)Value).ToUInt16(provider);
-		//}
+		public string ToString(IFormatProvider? provider)
+		{
+			if (Value == null)
+				throw new ArgumentNullException(nameof(Value));
 
-		//public uint ToUInt32(IFormatProvider provider)
-		//{
-		//	return ((IConvertible)Value).ToUInt32(provider);
-		//}
+			return Value.ToString(provider);
+		}
 
-		//public ulong ToUInt64(IFormatProvider provider)
-		//{
-		//	return ((IConvertible)Value).ToUInt64(provider);
-		//}
-		//#endregion
+		public object ToType(Type conversionType, IFormatProvider? provider)
+		{
+			if (Value == null)
+				throw new ArgumentNullException(nameof(Value));
+
+			return Convert.ChangeType(Value, conversionType, provider);
+		}
+
+		public ushort ToUInt16(IFormatProvider? provider)
+		{
+			return Convert.ToUInt16(Value, provider);
+		}
+
+		public uint ToUInt32(IFormatProvider? provider)
+		{
+			return Convert.ToUInt32(Value, provider);
+		}
+
+		public ulong ToUInt64(IFormatProvider? provider)
+		{
+			return Convert.ToUInt64(Value, provider);
+		}
+		#endregion
 
 		public static bool operator ==(StringEnum<T> a, StringEnum<T> b) => a?.Equals(b) ?? false;
 

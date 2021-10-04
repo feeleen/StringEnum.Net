@@ -10,12 +10,21 @@ namespace Tests
 	[TestClass]
 	public class TestBase
 	{
+		// This even wont compile, use "var Bag = (string) Foo" instead of "var Bag = Foo as string"
+		//[TestMethod]
+		//public void TestOperatorAs()
+		//{
+		//	var pet = MyPet.Dog as string;
+		//	Assert.IsTrue(pet == "Dog");
+		//}
+
 		[TestMethod]
-		public void TestMethod1()
+		public void TestIConvertibleChangeTypeToString()
 		{
 			var pet = MyPet.Dog;
+			var res = Convert.ChangeType(pet, typeof(string));
 
-			Assert.IsTrue(pet == MyPet.Dog);
+			Assert.IsTrue((string)res == "Dog");
 		}
 
 		[TestMethod]
@@ -23,13 +32,6 @@ namespace Tests
 		{
 			var mouse = MyPet.Mouse;
 			Assert.IsTrue(mouse == "Mouse");
-		}
-
-		[TestMethod]
-		public void TestMethod3()
-		{
-			var cat = MyPet.Cat;
-			Assert.IsTrue(cat == "Cat");
 		}
 
 		[TestMethod]
@@ -51,13 +53,6 @@ namespace Tests
 		{
 			string cat = (MyPet)"cat";
 			Assert.IsTrue(cat == "Cat");
-		}
-
-		[TestMethod]
-		public void TestMethodEnumUpperCase()
-		{
-			string cat = (MyFlower)"rose";
-			Assert.IsTrue(cat == MyFlower.Rose);
 		}
 
 		[TestMethod]
@@ -92,7 +87,6 @@ namespace Tests
 		public void TestMethodImplicitOperator()
 		{
 			MyFlower fl = "Rose";
-
 			Assert.IsTrue(fl == MyFlower.Rose);
 		}
 
@@ -102,7 +96,9 @@ namespace Tests
 			TypeConverter typeConverter = TypeDescriptor.GetConverter(typeof(MyFlower));
 			var rose = (MyFlower) typeConverter.ConvertFrom(null, Thread.CurrentThread.CurrentCulture, "Rose");
 
-			//MyFlower rosex = (MyFlower) Convert.ChangeType((object)"Rose", typeof(MyFlower)); //this fails sinse string has limitations when converting to custom types
+			//this fails since string has limitations when converting to custom types:
+			//MyFlower rosex = (MyFlower) Convert.ChangeType((object)"Rose", typeof(MyFlower)); 
+
 			Assert.IsTrue(rose == MyFlower.Rose.ToString());
 		}
 
@@ -112,7 +108,6 @@ namespace Tests
 			TypeConverter typeConverter = TypeDescriptor.GetConverter(typeof(MyFlower));
 			var fl = (MyFlower)typeConverter.ConvertFrom(null, Thread.CurrentThread.CurrentCulture, null);
 
-			//MyFlower rosex = (MyFlower) Convert.ChangeType((object)"Rose", typeof(MyFlower)); //this fails sinse string has limitations when converting to custom types
 			Assert.IsTrue(fl == MyFlower.GhostFlower);
 		}
 
