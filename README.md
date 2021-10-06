@@ -26,19 +26,17 @@ public class Foo
 {
 	public MyPet pet { get; }
 
-	public Foo(MyPet pet) => this.pet = pet;
-
 	public bool Bar()
 	{
 		var mouse = MyPet.Mouse;
 		if (mouse == "Mouse")
-			return true;
-		else
 		{
-			if (this.pet == MyPet.Dog || this.pet == MyPet.Mouse)
-				return true;
-			else
-				return false;
+			return true;
+		}
+		
+		if (this.pet == MyPet.Dog || this.pet == MyPet.Parse("Cat"))
+		{
+			return true;
 		}
 		
 		
@@ -73,5 +71,52 @@ var obj = JsonConvert.DeserializeObject<GardenFlower>(jsonData);
 
 Assert.IsTrue(obj.FlowerType == "Rose");
 Assert.IsTrue(obj.FlowerType == MyFlower.Rose);
+
+```
+
+
+# Use with data entities 
+[Linq2db](https://github.com/linq2db/linq2db) example:
+
+```cs
+public class PersonType : StringEnum<PersonType>
+{
+	public static PersonType EM => New();
+	public static PersonType SP => New();
+	public static PersonType SC => New();
+	public static PersonType VC => New();
+	public static PersonType IN => New();
+	public static PersonType GC => New();
+}
+
+[Table(Name = "[Person].[Person]")]
+public class EnumPerson
+{
+	[PrimaryKey, Identity]
+	public int BusinessEntityID { get; set; }
+	[Column]
+	public PersonType PersonType { get; set; }
+}
+```
+linq2db required Mapping initialization:
+```cs
+var ms = new MappingSchema();
+_ = dbContext.AddMappingSchema(ms);
+
+var builder = ms.GetFluentMappingBuilder();
+```
+Type conversion setup:
+```cs
+_ = builder.Entity<Person>().Property(e => e.PersonType).HasConversion(v => v.Value, s => PersonType.Parse(s));
+
+//or:
+
+ms.SetConverter<string, PersonType>(s => PersonType.Parse(s));
+ms.SetConverter<PersonType, DataParameter>(val => new DataParameter { Value = val.Value, DataType = DataType.VarChar });
+```
+usage:
+```cs
+var pers = new Person() { PersonType = PersonType.VC, BusinessEntityID = 1675 };
+var res = await db.UpdateAsync(pers)
 
 ```
