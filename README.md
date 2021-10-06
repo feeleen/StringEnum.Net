@@ -4,7 +4,7 @@
 
 .NET 5.0
 
-Defining your StringEnum:
+Define your StringEnum:
 
 ```cs
 
@@ -50,7 +50,7 @@ public class Foo
 }
 ```
 
-JSON conversion example
+JSON conversion example:
 
 ```cs
 [JsonConverter(typeof(JsonStringEnumConverter<MyFlower>))]
