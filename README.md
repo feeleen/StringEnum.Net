@@ -13,8 +13,8 @@ Define your StringEnum:
 
 public class MyPet : StringEnumBase<MyPet>
 {
-	public static MyPet Cat => New(); // = "Cat"
-	public static MyPet Rabbit => New("Rabbit");
+	public static MyPet Cat => New(); // = "Cat", default behaviour
+	public static MyPet Rabbit => New("Rabbits");
 	public static MyPet Dog => New(EnumCase.Upper, "Dog"); // MyPet.Dog.ToString() -> "DOG"
 	public static MyPet Ghost => New(null);  // handy when values in dataobject may have null values
 	public static MyPet Empty => New(String.Empty);
@@ -25,32 +25,25 @@ public class MyPet : StringEnumBase<MyPet>
 Usage example:
 
 ```cs
-public class Foo
+var mouse = MyPet.Mouse;
+if (mouse == "Mouse")
 {
-	public MyPet pet { get; }
-
-	public bool Bar()
-	{
-		var mouse = MyPet.Mouse;
-		if (mouse == "Mouse")
-		{
-			return true;
-		}
-		
-		if (this.pet == MyPet.Dog || this.pet == MyPet.Parse("Cat"))
-		{
-			return true;
-		}
-		
-		
-		// implicit conversions example
-		string cat = MyPet.Cat;
-            	Assert.IsTrue(cat == "Cat");
-		
-		string cat = (MyPet)"cat";
-            	Assert.IsTrue(cat == "Cat");
-	}
+	return true;
 }
+
+if (mouse == MyPet.Parse("mouse")) // parsing is case insensitive
+{
+	return true;
+}
+
+
+// implicit conversions example
+string cat = MyPet.Cat;
+Assert.IsTrue(cat == "Cat");
+
+string dog = (MyPet)"Dog";
+Assert.IsTrue(dog == "Dog");
+
 ```
 
 JSON conversion example:
