@@ -26,7 +26,7 @@ Usage example:
 
 ```cs
 var mouse = MyPet.Mouse;
-if (mouse == "Mouse")
+if (mouse == "Mouse") // compare with string without .ToString()
 {
 	return true;
 }
