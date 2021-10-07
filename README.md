@@ -112,13 +112,20 @@ And type conversion setup:
 ```cs
 _ = builder.Entity<Person>().Property(e => e.PersonType).HasConversion(v => v.Value, s => PersonType.Parse(s));
 
-//or:
+```
+or
+```cs
 
 ms.SetConverter<string, PersonType>(s => PersonType.Parse(s));
 ms.SetConverter<PersonType, DataParameter>(val => new DataParameter { Value = val.Value, DataType = DataType.VarChar });
 ```
 usage:
 ```cs
+
+// select records
+var persons = await db.GetTable<Person>().ToListAsync();
+
+// update record
 var pers = new Person() { PersonType = PersonType.VC, BusinessEntityID = 1675 };
 var res = await db.UpdateAsync(pers)
 
