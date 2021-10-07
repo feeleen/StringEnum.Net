@@ -7,7 +7,7 @@
 
 # .NET 5.0
 
-Define your StringEnum:
+Define your `StringEnum`:
 
 ```cs
 
@@ -47,7 +47,7 @@ Assert.IsTrue(dog == "Dog");
 
 ```
 
-JSON conversion example:
+`JSON` conversion example:
 
 ```cs
 [JsonConverter(typeof(JsonStringEnumConverter<MyFlower>))]
@@ -71,7 +71,7 @@ Assert.IsTrue(obj.FlowerType == MyFlower.Rose);
 
 ```
 
-TypeConverter and IConvertible support to work with strings:
+`TypeConverter` and `IConvertible` support to work with strings:
 
 ```cs
 [TypeConverter(typeof(StringEnumConverter<MyFlower>))] // default type converter
@@ -93,6 +93,7 @@ var res = Convert.ChangeType(fl, typeof(string));
 [Linq2db](https://github.com/linq2db/linq2db) example:
 
 1. Define your model:
+
 	```cs
 	public class PersonType : StringEnum<PersonType>
 	{
@@ -113,7 +114,8 @@ var res = Convert.ChangeType(fl, typeof(string));
 		public PersonType PersonType { get; set; } // string values "EM", "SP", "SC" ... etc.
 	}
 	```
-2. Setup type conversion via MappingSchema:
+2. Setup type conversion via `MappingSchema`:
+
 	```cs
 	var ms = new MappingSchema();
 	_ = dbContext.AddMappingSchema(ms);
@@ -132,7 +134,8 @@ var res = Convert.ChangeType(fl, typeof(string));
 	ms.SetConverter<PersonType, DataParameter>(val => new DataParameter { Value = val.Value, DataType = DataType.VarChar });
 	```
 3. Usage:
-	 ```cs
+
+	```cs
 
 	// select records
 	var persons = await db.GetTable<Person>().ToListAsync();
