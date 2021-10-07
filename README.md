@@ -108,7 +108,7 @@ _ = dbContext.AddMappingSchema(ms);
 
 var builder = ms.GetFluentMappingBuilder();
 ```
-Type conversion setup:
+And type conversion setup:
 ```cs
 _ = builder.Entity<Person>().Property(e => e.PersonType).HasConversion(v => v.Value, s => PersonType.Parse(s));
 
