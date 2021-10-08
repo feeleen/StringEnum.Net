@@ -90,7 +90,7 @@ var res = Convert.ChangeType(fl, typeof(string));
 ```
 
 # Use with data entities 
-[Linq2db](https://github.com/linq2db/linq2db) example:
+### [Linq2db](https://github.com/linq2db/linq2db):
 
 1. Define your model:
 
@@ -145,3 +145,23 @@ var res = Convert.ChangeType(fl, typeof(string));
 	var res = await db.UpdateAsync(pers)
 
 	```
+
+
+### EF Core:
+
+```cs
+
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+	modelBuilder
+		.Entity<Person>()
+		.Property(e => e.PersonType)
+		.HasConversion(
+			v => v.ToString(),
+			v => PersonType.Parse(v));
+
+	base.OnModelCreating(modelBuilder);
+}
+
+```
+	
