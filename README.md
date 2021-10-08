@@ -11,7 +11,7 @@ Define your `StringEnum`:
 
 ```cs
 
-public class MyPet : StringEnumBase<MyPet>
+public class MyPet : StringEnum<MyPet>
 {
 	public static MyPet Cat => New(); // = "Cat", default behaviour
 	public static MyPet Rabbit => New("Rabbits");
@@ -51,7 +51,7 @@ Assert.IsTrue(dog == "Dog");
 
 ```cs
 [JsonConverter(typeof(JsonStringEnumConverter<MyFlower>))]
-public class MyFlower : StringEnumBase<MyFlower>
+public class MyFlower : StringEnum<MyFlower>
 {
     public static MyFlower Rose => New();
     public static MyFlower Hibiscus => New();
@@ -75,7 +75,7 @@ Assert.IsTrue(obj.FlowerType == MyFlower.Rose);
 
 ```cs
 [TypeConverter(typeof(StringEnumConverter<MyFlower>))] // default type converter
-public class MyFlower : StringEnumBase<MyFlower>
+public class MyFlower : StringEnum<MyFlower>
 {
     public static MyFlower Rose => New();
     public static MyFlower Hibiscus => New();
