@@ -131,7 +131,7 @@ var res = Convert.ChangeType(fl, typeof(string));
 	```cs
 
 	ms.SetConverter<string, PersonType>(s => PersonType.Parse(s));
-	ms.SetConverter<PersonType, DataParameter>(val => new DataParameter { Value = val.Value, DataType = DataType.VarChar });
+	ms.SetConverter<PersonType, DataParameter>(val => new DataParameter { Value = val, DataType = DataType.VarChar });
 	```
 3. Usage:
 
