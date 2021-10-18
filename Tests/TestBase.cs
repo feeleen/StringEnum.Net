@@ -142,16 +142,31 @@ namespace Tests
 			Assert.IsTrue(obj.FlowerType == MyFlower.GhostFlower);
 			Assert.IsFalse(obj.FlowerType == MyFlower.Hibiscus);
 		}
+
+		[TestMethod]
+		public void TestAdditionalPropertyValue()
+		{
+			MyPet dog = (MyPet)"Dog";
+
+			Assert.IsTrue(dog.AdditionalInfo == "Big bad dog!");
+			
+		}
 	}
 
 	[JsonConverter(typeof(JsonStringEnumConverter<MyPet>))]
 	public class MyPet : StringEnum<MyPet>
 	{
+		//Use only New("") and don't use casting here, like: (MyPet)"Horse" -> this will lead to stack overflow, due to initialization looping
 		public static MyPet Cat => New(); // = "Cat"
-		public static MyPet Dog => New("Dog");
+		public static MyPet Dog => New("Dog").HasPropertyValue(x => x.AdditionalInfo, "Big bad dog!");
 		public static MyPet Mouse => New("Mouse");
 		public static MyPet Ghost => New(null);
 		public static MyPet Empty => New(string.Empty);
+
+		// You can mix values
+		public static MyPet OldCat => New(Cat + Mouse);
+
+		public string AdditionalInfo { get; protected set; }
 	}
 
 

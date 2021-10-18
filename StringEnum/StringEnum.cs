@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
@@ -23,6 +24,20 @@ namespace StringEnum
 		public string? Value { get; protected set; }
 
 		public override string? ToString() => Value;
+
+		public StringEnum([CallerMemberName] string? value = null)
+		{
+			Value = value;
+		}
+
+		public T HasPropertyValue<TPropType>(Expression<Func<T, TPropType>> lambda, TPropType value)
+		{
+			var memberExpression = (MemberExpression)lambda.Body;
+			var propertyInfo = (PropertyInfo)memberExpression.Member;
+			
+			propertyInfo.SetValue(this, value, null);
+			return (T)this;
+		}
 
 		protected static T New([CallerMemberName] string? value = null)
 		{
@@ -74,7 +89,7 @@ namespace StringEnum
 			if (!all.Any(a => string.Equals(a?.Value, value, StringComparison.OrdinalIgnoreCase)))
 				throw new InvalidOperationException($"Value \"{value}\" is not a valid value for the type {typeof(T).Name}");
 
-			return all.Single(a => string.Equals(a?.Value, value, StringComparison.OrdinalIgnoreCase));
+			return all.First(a => string.Equals(a?.Value, value, StringComparison.OrdinalIgnoreCase));
 		}
 
 
@@ -214,9 +229,9 @@ namespace StringEnum
 		/// </summary>
 		/// <param name="input"></param>
 		public static implicit operator StringEnum<T>?(string? input)
-        {
-            return (T?) Parse(input);
-        }
+		{
+			return (T?) Parse(input);
+		}
 
 		public static implicit operator StringEnum<T>?(T? input)
 		{
