@@ -20,6 +20,19 @@ public class MyPet : StringEnum<MyPet>
 	public static MyPet Empty => New(String.Empty);
 }
 
+// additional properties for enum values:
+public class MyFlower : StringEnum<MyFlower>
+{
+	public static MyPet Rose => New().HasPropertyValue(x => x.AdditionalInfo, "Big");
+	public static MyPet Camomile => New()
+		.HasPropertyValue(x => x.AdditionalInfo, "Small")
+		.HasPropertyValue(x => x.DefaultQuantity, 15);
+	
+	//your custom properties here:
+	public string AdditionalInfo { get; protected set; }
+	public int? DefaultQuantity { get; protected set; }
+}
+
 ```
 
 Usage example:
