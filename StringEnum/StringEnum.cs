@@ -1,13 +1,11 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 
 namespace StringEnum
 {
@@ -21,16 +19,25 @@ namespace StringEnum
 			AsIs
 		}
 
-		public string? Value { get; protected set; }
+		public string? Value { get; private set; }
 
 		public override string? ToString() => Value;
 
-		public StringEnum([CallerMemberName] string? value = null)
-		{
-			Value = value;
-		}
+        protected StringEnum()
+        {
+            if (GetType() == typeof(T))
+            {
+                StackTrace st = new StackTrace();
+                StackFrame[] frames = st.GetFrames();
+                if (frames[0]?.GetMethod()?.Name == ".ctor"
+                    && frames[1]?.GetMethod()?.Name == ".ctor")
+                {
+                    Value = frames[2]?.GetMethod()?.Name?.Replace("get_", "");
+                }
+            }
+        }
 
-		public T HasPropertyValue<TPropType>(Expression<Func<T, TPropType>> lambda, TPropType value)
+        public T HasPropertyValue<TPropType>(Expression<Func<T, TPropType>> lambda, TPropType value)
 		{
 			var memberExpression = (MemberExpression)lambda.Body;
 			var propertyInfo = (PropertyInfo)memberExpression.Member;
@@ -46,7 +53,8 @@ namespace StringEnum
 
 		protected static T New(EnumCase enumCase, [CallerMemberName] string? value = null)
 		{
-			var objValue = Activator.CreateInstance<T>();
+			// we don't want default base constructor to get called here, so we don't use Activator.CreateInstance()
+			var objValue = (T)FormatterServices.GetUninitializedObject(typeof(T));
 
 			if (value == null)
 			{
@@ -182,17 +190,17 @@ namespace StringEnum
 		public string ToString(IFormatProvider? provider)
 		{
 			if (Value == null)
-				throw new ArgumentNullException(nameof(Value));
+				return string.Empty;
 
 			return Value.ToString(provider);
 		}
 
 		public object ToType(Type conversionType, IFormatProvider? provider)
 		{
-			if (Value == null)
-				throw new ArgumentNullException(nameof(Value));
+			if (conversionType == typeof(T))
+				return (T)Parse(Value)!;
 
-			return Convert.ChangeType(Value, conversionType, provider);
+			return Convert.ChangeType(Value, conversionType, provider)!;
 		}
 
 		public ushort ToUInt16(IFormatProvider? provider)

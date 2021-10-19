@@ -70,6 +70,13 @@ namespace Tests
 		}
 
 		[TestMethod]
+		public void TestMethodParseTest()
+		{
+			MyPet empty = MyPet.Parse("Cat");
+			Assert.IsTrue(empty == MyPet.Cat);
+		}
+
+		[TestMethod]
 		public void TestMethodEmptyTest()
 		{
 			MyPet empty = (MyPet) "";
@@ -77,7 +84,7 @@ namespace Tests
 		}
 
 		[TestMethod]
-		public void TestMethodParseTest()
+		public void TestMethodParseEmptyTest()
 		{
 			MyPet empty = MyPet.Parse("");
 			Assert.IsTrue(empty == MyPet.Empty);
@@ -151,15 +158,36 @@ namespace Tests
 			Assert.IsTrue(dog.AdditionalInfo == "Big bad dog!");
 			
 		}
+
+		[TestMethod]
+		public void TestTargetTypeConstructor()
+		{
+			MyFriend andy = (MyFriend)"Andy";
+
+			Assert.IsTrue(andy == MyFriend.Andy);
+		}
+	}
+
+	public class MyFriend : StringEnum<MyFriend>
+	{
+		public static MyFriend Andy => new();
+		public static MyFriend George => new();
+		public int? DefaultQuantity { get; protected set; } = 0;
 	}
 
 	[JsonConverter(typeof(JsonStringEnumConverter<MyPet>))]
 	public class MyPet : StringEnum<MyPet>
 	{
 		//Use only New("") and don't use casting here, like: (MyPet)"Horse" -> this will lead to stack overflow, due to initialization looping
+
+		public static MyPet Pig => new(); // = "Pig"
 		public static MyPet Cat => New(); // = "Cat"
-		public static MyPet Dog => New("Dog").HasPropertyValue(x => x.AdditionalInfo, "Big bad dog!");
-		public static MyPet Mouse => New("Mouse");
+		public static MyPet Dog => New("Dog")
+			.HasPropertyValue(x => x.AdditionalInfo, "Big bad dog!");
+
+		public static MyPet Mouse => New("Mouse")
+			.HasPropertyValue(x => x.DefaultQuantity, 15);
+
 		public static MyPet Ghost => New(null);
 		public static MyPet Empty => New(string.Empty);
 
@@ -167,6 +195,7 @@ namespace Tests
 		public static MyPet OldCat => New(Cat + Mouse);
 
 		public string AdditionalInfo { get; protected set; }
+		public int? DefaultQuantity { get; protected set; } = 0;
 	}
 
 
