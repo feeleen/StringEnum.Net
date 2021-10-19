@@ -178,14 +178,27 @@ var res = Convert.ChangeType(fl, typeof(string));
 
 ```cs
 
+[Keyless]
+public class PersonTitle : StringEnum<PersonTitle>
+{
+	public static PersonTitle Mr => New("Mr.");
+	public static PersonTitle Ms => New("Ms.");
+	public static PersonTitle Mss => New("Ms");
+	public static PersonTitle Mrs => New("Mrs.");
+	public static PersonTitle Sr => New("Sr.");
+	public static PersonTitle Sra => New("Sra.");
+	public static PersonTitle Undefined => New(null);
+}
+
+// setup converter:
 protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
 	modelBuilder
 		.Entity<Person>()
-		.Property(e => e.PersonType)
+		.Property(e => e.Title)
 		.HasConversion(
 			v => v.ToString(),
-			v => PersonType.Parse(v));
+			v => PersonTitle.Parse(v));
 
 	base.OnModelCreating(modelBuilder);
 }
