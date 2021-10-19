@@ -7,25 +7,38 @@
 
 # .NET 5.0
 
-Define your `StringEnum`:
+Define your `StringEnum` clean and simple:
+
+```cs
+public class MyPet : StringEnum<MyPet>
+{
+	public static MyPet Monkey => new(); // = "Monkey" 
+	public static MyPet Cat => new(); 
+	public static MyPet Rabbit => new();
+}
+```
+
+More initialization options:
 
 ```cs
 
 public class MyPet : StringEnum<MyPet>
 {
-	public static MyPet Monkey => new(); // = "Monkey", default behaviour with target type initialization
-	public static MyPet Cat => New(); // = "Cat", default behaviour
 	public static MyPet Rabbit => New("Rabbits");
 	public static MyPet Dog => New(EnumCase.Upper, "Dog"); // MyPet.Dog.ToString() -> "DOG"
 	public static MyPet Ghost => New(null);  // handy when values in dataobject may have null values
 	public static MyPet Empty => New(String.Empty);
 }
+```
 
-// additional properties for enum values:
+Add additional properties for yout StringEnum:
+
+```cs
 public class MyFlower : StringEnum<MyFlower>
 {
-	public static MyPet Rose => New().HasPropertyValue(x => x.AdditionalInfo, "Big");
-	public static MyPet Camomile => New()
+	public static MyFlower Rose => New().HasPropertyValue(x => x.AdditionalInfo, "Big");
+	
+	public static MyFlower Camomile => New()
 		.HasPropertyValue(x => x.AdditionalInfo, "Small")
 		.HasPropertyValue(x => x.DefaultQuantity, 15);
 	
