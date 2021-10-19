@@ -13,6 +13,7 @@ Define your `StringEnum`:
 
 public class MyPet : StringEnum<MyPet>
 {
+	public static MyPet Monkey => new(); // = "Monkey", default behaviour with target type initialization
 	public static MyPet Cat => New(); // = "Cat", default behaviour
 	public static MyPet Rabbit => New("Rabbits");
 	public static MyPet Dog => New(EnumCase.Upper, "Dog"); // MyPet.Dog.ToString() -> "DOG"
