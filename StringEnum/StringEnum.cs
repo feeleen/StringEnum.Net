@@ -23,25 +23,25 @@ namespace StringEnum
 
 		public override string? ToString() => Value;
 
-        protected StringEnum()
-        {
-            if (GetType() == typeof(T))
-            {
-                StackTrace st = new StackTrace();
-                StackFrame[] frames = st.GetFrames();
-                if (frames[0]?.GetMethod()?.Name == ".ctor"
-                    && frames[1]?.GetMethod()?.Name == ".ctor")
-                {
-                    Value = frames[2]?.GetMethod()?.Name?.Replace("get_", "");
-                }
-            }
-        }
+		protected StringEnum()
+		{
+			if (GetType() == typeof(T))
+			{
+				StackTrace st = new StackTrace();
+				StackFrame[] frames = st.GetFrames();
 
-        public T HasPropertyValue<TPropType>(Expression<Func<T, TPropType>> lambda, TPropType value)
+				Value = frames
+					.Where(m => m.GetMethod()?.DeclaringType == typeof(T) && m.GetMethod()?.IsConstructor == false)
+					.Select(x => x.GetMethod()?.Name?.Replace("get_", ""))
+					.First();
+			}
+		}
+
+		public T HasPropertyValue<TPropType>(Expression<Func<T, TPropType>> lambda, TPropType value)
 		{
 			var memberExpression = (MemberExpression)lambda.Body;
 			var propertyInfo = (PropertyInfo)memberExpression.Member;
-			
+
 			propertyInfo.SetValue(this, value, null);
 			return (T)this;
 		}
@@ -58,7 +58,7 @@ namespace StringEnum
 
 			if (value == null)
 			{
-				
+
 				objValue.Value = null;
 				return objValue;
 			}
