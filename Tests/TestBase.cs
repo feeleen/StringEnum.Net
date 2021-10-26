@@ -158,21 +158,6 @@ namespace Tests
 			Assert.IsTrue(dog.AdditionalInfo == "Big bad dog!");
 			
 		}
-
-		[TestMethod]
-		public void TestTargetTypeConstructor()
-		{
-			MyFriend andy = (MyFriend)"Andy";
-
-			Assert.IsTrue(andy == MyFriend.Andy);
-		}
-	}
-
-	public class MyFriend : StringEnum<MyFriend>
-	{
-		public static MyFriend Andy => new();
-		public static MyFriend George => new();
-		public int? DefaultQuantity { get; protected set; } = 0;
 	}
 
 	[JsonConverter(typeof(JsonStringEnumConverter<MyPet>))]
@@ -180,19 +165,19 @@ namespace Tests
 	{
 		//Use only New("") and don't use casting here, like: (MyPet)"Horse" -> this will lead to stack overflow, due to initialization looping
 
-		public static MyPet Pig => new(); // = "Pig"
-		public static MyPet Cat => New(); // = "Cat"
-		public static MyPet Dog => New("Dog")
+		public static MyPet Pig = New(); // = "Pig"
+		public static MyPet Cat = New(); // = "Cat"
+		public static MyPet Dog = New("Dog")
 			.HasPropertyValue(x => x.AdditionalInfo, "Big bad dog!");
 
-		public static MyPet Mouse => New("Mouse")
+		public static MyPet Mouse = New("Mouse")
 			.HasPropertyValue(x => x.DefaultQuantity, 15);
 
-		public static MyPet Ghost => New(null);
-		public static MyPet Empty => New(string.Empty);
+		public static MyPet Ghost = New(null);
+		public static MyPet Empty = New(string.Empty);
 
 		// You can mix values
-		public static MyPet OldCat => New(Cat + Mouse);
+		public static MyPet OldCat = New(Cat + Mouse);
 
 		public string AdditionalInfo { get; protected set; }
 		public int? DefaultQuantity { get; protected set; } = 0;
@@ -203,12 +188,12 @@ namespace Tests
 	[TypeConverter(typeof(StringEnumConverter<MyFlower>))]
 	public class MyFlower : StringEnum<MyFlower>
 	{
-		public static MyFlower Rose => New(EnumCase.Upper);
-		public static MyFlower Hibiscus => New();
+		public static MyFlower Rose = New(EnumCase.Upper);
+		public static MyFlower Hibiscus = New();
 
-		public static MyFlower GhostFlower => New(null);
+		public static MyFlower GhostFlower = New(null);
 
-		public static MyFlower Empty => New(string.Empty);
+		public static MyFlower Empty = New(string.Empty);
 
 		public static implicit operator MyFlower(string input)
 		{

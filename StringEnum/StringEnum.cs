@@ -27,13 +27,7 @@ namespace StringEnum
 		{
 			if (GetType() == typeof(T))
 			{
-				StackTrace st = new StackTrace();
-				StackFrame[] frames = st.GetFrames();
-
-				Value = frames
-					.Where(m => m.GetMethod()?.DeclaringType == typeof(T) && m.GetMethod()?.IsConstructor == false)
-					.Select(x => x.GetMethod()?.Name?.Replace("get_", ""))
-					.First();
+				throw new Exception($"Target type intialization not allowed for StringEnum class Fields or Properties ({this.GetType().Name})");
 			}
 		}
 
@@ -83,11 +77,23 @@ namespace StringEnum
 
 		public static List<T?> AsList()
 		{
-			return typeof(T)
+			var fields = typeof(T)
+				.GetFields(BindingFlags.Public | BindingFlags.Static)
+				.Where(p => p.FieldType == typeof(T))
+				.Select(p => (T?)p.GetValue(null))
+				.ToList();
+
+			var props = typeof(T)
 				.GetProperties(BindingFlags.Public | BindingFlags.Static)
 				.Where(p => p.PropertyType == typeof(T))
 				.Select(p => (T?)p.GetValue(null))
 				.ToList();
+
+			var result = new List<T?>();
+			result.AddRange(props);
+			result.AddRange(fields);
+
+			return result;
 		}
 
 		public static T? Parse(string? value)
