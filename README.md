@@ -12,9 +12,9 @@ Define your `StringEnum` clean and simple:
 ```cs
 public class MyPet : StringEnum<MyPet>
 {
-	public static MyPet Monkey => new(); // = "Monkey" 
-	public static MyPet Cat => new(); 
-	public static MyPet Rabbit => new();
+	public static MyPet Monkey = New(); // = "Monkey" 
+	public static MyPet Cat = New(); 
+	public static MyPet Rabbit = New();
 }
 ```
 
@@ -24,10 +24,10 @@ More initialization options:
 
 public class MyPet : StringEnum<MyPet>
 {
-	public static MyPet Rabbit => New("Rabbits");
-	public static MyPet Dog => New(EnumCase.Upper, "Dog"); // MyPet.Dog.ToString() -> "DOG"
-	public static MyPet Ghost => New(null);  // handy when values in dataobject may have null values
-	public static MyPet Empty => New(String.Empty);
+	public static MyPet Rabbit = New("Rabbits");
+	public static MyPet Dog = New(EnumCase.Upper, "Dog"); // MyPet.Dog.ToString() -> "DOG"
+	public static MyPet Ghost = New(null);  // handy when values in dataobject may have null values
+	public static MyPet Empty = New(String.Empty);
 }
 ```
 
@@ -36,9 +36,9 @@ Add additional properties for yout StringEnum:
 ```cs
 public class MyFlower : StringEnum<MyFlower>
 {
-	public static MyFlower Rose => New().HasPropertyValue(x => x.AdditionalInfo, "Big");
+	public static MyFlower Rose = New().HasPropertyValue(x => x.AdditionalInfo, "Big");
 	
-	public static MyFlower Camomile => New()
+	public static MyFlower Camomile = New()
 		.HasPropertyValue(x => x.AdditionalInfo, "Small")
 		.HasPropertyValue(x => x.DefaultQuantity, 15);
 	
@@ -80,8 +80,8 @@ Assert.IsTrue(dog == "Dog");
 [JsonConverter(typeof(JsonStringEnumConverter<MyFlower>))]
 public class MyFlower : StringEnum<MyFlower>
 {
-    public static MyFlower Rose => New();
-    public static MyFlower Hibiscus => New();
+    public static MyFlower Rose = New();
+    public static MyFlower Hibiscus = New();
 }
 
 public class GardenFlower
@@ -104,8 +104,8 @@ Assert.IsTrue(obj.FlowerType == MyFlower.Rose);
 [TypeConverter(typeof(StringEnumConverter<MyFlower>))] // default type converter
 public class MyFlower : StringEnum<MyFlower>
 {
-    public static MyFlower Rose => New();
-    public static MyFlower Hibiscus => New();
+    public static MyFlower Rose = New();
+    public static MyFlower Hibiscus = New();
 }
 
 TypeConverter typeConverter = TypeDescriptor.GetConverter(typeof(MyFlower));
@@ -124,12 +124,12 @@ var res = Convert.ChangeType(fl, typeof(string));
 	```cs
 	public class PersonType : StringEnum<PersonType>
 	{
-		public static PersonType EM => New();
-		public static PersonType SP => New();
-		public static PersonType SC => New();
-		public static PersonType VC => New();
-		public static PersonType IN => New();
-		public static PersonType GC => New();
+		public static PersonType EM = New();
+		public static PersonType SP = New();
+		public static PersonType SC = New();
+		public static PersonType VC = New();
+		public static PersonType IN = New();
+		public static PersonType GC = New();
 	}
 
 	[Table(Name = "[Person].[Person]")]
@@ -181,13 +181,13 @@ var res = Convert.ChangeType(fl, typeof(string));
 [Keyless]
 public class PersonTitle : StringEnum<PersonTitle>
 {
-	public static PersonTitle Mr => New("Mr.");
-	public static PersonTitle Ms => New("Ms.");
-	public static PersonTitle Mss => New("Ms");
-	public static PersonTitle Mrs => New("Mrs.");
-	public static PersonTitle Sr => New("Sr.");
-	public static PersonTitle Sra => New("Sra.");
-	public static PersonTitle Undefined => New(null);
+	public static PersonTitle Mr = New("Mr.");
+	public static PersonTitle Ms = New("Ms.");
+	public static PersonTitle Mss = New("Ms");
+	public static PersonTitle Mrs = New("Mrs.");
+	public static PersonTitle Sr = New("Sr.");
+	public static PersonTitle Sra = New("Sra.");
+	public static PersonTitle Undefined = New(null);
 }
 
 // setup converter:
