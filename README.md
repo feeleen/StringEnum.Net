@@ -133,7 +133,7 @@ var res = Convert.ChangeType(fl, typeof(string));
 	}
 
 	[Table(Name = "[Person].[Person]")]
-	public class EnumPerson
+	public class Person
 	{
 		[PrimaryKey, Identity]
 		public int BusinessEntityID { get; set; }
