@@ -45,14 +45,16 @@ namespace Tests
 		public void TestMethod5()
 		{
 			string cat = MyPet.Cat;
-			Assert.IsTrue(cat == "Cat");
+			Assert.IsTrue(cat != "Cat");
+			Assert.IsTrue(cat.ToLower() == "Cat".ToLower());
 		}
 
 		[TestMethod]
 		public void TestMethodIgnoreCase()
 		{
 			string cat = (MyPet)"cat";
-			Assert.IsTrue(cat == "Cat");
+			Assert.IsTrue(cat != "Cat");
+			Assert.IsTrue(cat.ToLower() == "Cat".ToLower());
 		}
 
 		[TestMethod]
@@ -166,7 +168,7 @@ namespace Tests
 		//Use only New("") and don't use casting here, like: (MyPet)"Horse" -> this will lead to stack overflow, due to initialization looping
 
 		public static MyPet Pig = New(); // = "Pig"
-		public static MyPet Cat = New(); // = "Cat"
+		public static MyPet Cat = New("cat");
 		public static MyPet Dog = New("Dog")
 			.HasPropertyValue(x => x.AdditionalInfo, "Big bad dog!");
 
