@@ -31,8 +31,11 @@ namespace DataTests
 
             using (var db = new Linq2DbContext())
             {
-                //db.InitStringEnumContextMappings();
-                db.InitStringEnumConverterContextMappings();
+                db.InitMappingBuilderMappings();
+                
+                //or use converters, which is equivalent to mapping builder and would work fine too
+                //db.InitStringEnumConverterContextMappings();
+
                 try
                 {
                     db.DropTable<Person>();

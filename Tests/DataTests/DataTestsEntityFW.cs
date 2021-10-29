@@ -17,7 +17,6 @@ namespace DataTests
 
 			using (EntityFWContext db = new EntityFWContext())
 			{
-
 				var pers = db.Persons.Find(DataTestsInit.TestEntityID);
 				pers.PersonType = pers.PersonType == PersonType.EM ? PersonType.IN : PersonType.EM;
 				newPerconType = pers.PersonType;
@@ -48,7 +47,6 @@ namespace DataTests
 				Assert.AreEqual(db.SaveChanges(), 1);
 			}
 
-
 			using (EntityFWContext db = new EntityFWContext())
 			{
 				var persRes = db.Persons.Find(DataTestsInit.TestEntityID);
@@ -56,7 +54,6 @@ namespace DataTests
 				Assert.IsTrue(persRes.PersonType == newPerconType);
 			}
 		}
-
 
 		[TestMethod]
 		public void TestMethod2()
@@ -71,7 +68,6 @@ namespace DataTests
 
 				Assert.AreEqual(db.SaveChanges(), 1);
 			}
-
 
 			using (EntityFWContext db = new EntityFWContext())
 			{

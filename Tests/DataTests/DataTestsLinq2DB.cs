@@ -14,7 +14,7 @@ namespace DataTests
 		{
 			using (var db = new Linq2DbContext())
 			{
-				db.InitStringEnumContextMappings();
+				db.InitMappingBuilderMappings();
 
 				var persons = db.GetTable<Person>().Select(x=> x).ToList();
 
@@ -29,7 +29,7 @@ namespace DataTests
 		{
 			using (var db = new Linq2DbContext())
 			{
-				db.InitStringEnumConverterContextMappings();
+				db.InitConverterMappings();
 
 				var persons = await db.GetTable<Person>().ToListAsync();
 
@@ -59,7 +59,7 @@ namespace DataTests
 		{
 			using (var db = new Linq2DbContext())
 			{
-				db.InitStringEnumConverterContextMappings();
+				db.InitConverterMappings();
 
 				var uniqueLastNames = await
 					db.GetTable<Person>()
@@ -72,15 +72,27 @@ namespace DataTests
 			}
 		}
 
-
 		[TestMethod]
 		public async Task TestUpdate()
 		{
 			using (var db = new Linq2DbContext())
 			{
-				db.InitStringEnumConverterContextMappings();
+				db.InitConverterMappings();
 
 				var res = await db.GetTable<Person>().Where(x => x.BusinessEntityID == 1).Set(x=> x.PersonType, PersonType.IN).UpdateAsync();
+
+				Assert.IsTrue(res > 0);
+			}
+		}
+
+		[TestMethod]
+		public async Task TestUpdate2()
+		{
+			using (var db = new Linq2DbContext())
+			{
+				db.InitMappingBuilderMappings();
+
+				var res = await db.GetTable<Person>().Where(x => x.BusinessEntityID == 1).Set(x => x.PersonType, PersonType.IN).UpdateAsync();
 
 				Assert.IsTrue(res > 0);
 			}
