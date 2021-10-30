@@ -152,7 +152,7 @@ var res = Convert.ChangeType(fl, typeof(string));
 	and type conversion setup:
 	```cs
 	_ = builder.Entity<Person>().Property(e => e.PersonType).HasConversion(v => v.Value, s => PersonType.Parse(s));
-
+	ms.SetDataType(typeof(PersonType), DataType.VarChar);
 	```
 	or
 	```cs
