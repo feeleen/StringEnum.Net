@@ -10,3 +10,6 @@
 /StringEnum/obj
 /.vs/StringEnum/v17
 /.vs/StringEnum
+/Tests/bin/Debug/net6.0
+/.vs/ProjectEvaluation
+/Tests/bin/Debug/net7.0
